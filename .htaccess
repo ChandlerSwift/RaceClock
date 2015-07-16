@@ -1,0 +1,4 @@
+<Files "racing.db">
+  Order Allow,Deny
+  Deny from all
+</Files>
