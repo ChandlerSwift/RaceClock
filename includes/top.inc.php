@@ -26,7 +26,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Swift Racing</a>
+          <a class="navbar-brand" href="/">Swift Racing</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -34,14 +34,16 @@
 			<li class="dropdown">
 			  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
 			  <ul class="dropdown-menu">
-				<li><a href="#">Add User</a></li>
-				<li><a href="#">Correct Time</a></li>
-				<li><a href="#">Delete Time</a></li>
+				<li><a href="/admin/add-user.php">Add User</a></li>
+				<li><a href="/admin/manual-race.php">Manual Race</a></li>
+				<li><a href="/admin/correct-time.php">Correct Time</a></li>
+				<li><a href="/admin/delete-race.php">Delete Race</a></li>
 				<li role="separator" class="divider"></li>
-				<li><a href="http://<?php echo $_SERVER['SERVER_ADDR']; ?>:4200">Shell Access</a></li>
+				<li class="disabled"><a onclick="alert('Nice try.')" href="#">Shell Access</a></li>
 			  </ul>
 			</li>
             <li><a href="/race.php">Race!</a></li>
+			<li class="hidden-sm hidden-md hidden-lg"><a href="/user.php">Users</a></li>
           </ul>
         </div>
       </div>
@@ -56,10 +58,10 @@
             <li<?php if ($page == "Go-kart Records") echo " class='active'";?>><a href="/gokart.php">Go-kart Records</a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li<?php if ($page == "User") echo " class='active'";?>><a href="/user.php?user=Aidan Lowe">Aidan Lowe</a></li>
-            <li><a href="/user.php?user=Chandler Swift">Chandler Swift</a></li>
+            <li<?php if ($page == "User") echo " class='active'";?>><a href="/user.php">User Stats</a></li>
+            <!--<li><a href="/user.php?user=Chandler Swift">Chandler Swift</a></li>
             <li><a href="/user.php?user=Jayden Rocha">Jayden Rocha</a></li>
-            <li><a href="">Racer Names</a></li>
+            <li><a href="">Racer Names</a></li>-->
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
