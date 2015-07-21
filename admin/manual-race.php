@@ -9,6 +9,7 @@ include_once "../includes/db.inc.php";
 		$db->exec("INSERT INTO times (userid,vehicle,time_ms,time_str,timestamp) VALUES ('" . $_POST['userid']. "','" . $_POST['vehicle'] . "','" . $time_ms."','".$timestr."','".$_POST['timestamp']."')");
 		echo 'Race Added. <a href="manual-race.php">Add another?</a> | <a href="/">Home</a>';
 	} else { ?>
+<a href="/">Back to Home</a><br><br>
 <form action="manual-race.php" method="POST">
 Racer:
 <select name="userid">
