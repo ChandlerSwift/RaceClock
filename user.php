@@ -1,8 +1,15 @@
 <?php
 $page = "User";
 include "includes/top.inc.php";
+include_once "includes/db.inc.php";
 ?>
-		<h1 class="page-header"><?php echo $_GET['user']; ?></h1>
+<?php if (isset($_GET["userid"])) { ?>
+		<h1 class="page-header"><?php
+   $sql ="SELECT fullname FROM users WHERE userid=" . $_GET['userid'] . ";";
+   $ret = $db->query($sql);
+   $row = $ret->fetchArray(SQLITE3_ASSOC);
+   echo $row['fullname'];
+?></h1>
 		  <div class="row">
 		  <div class="col-md-6">
           <h2 class="sub-header">Personal Dirt Bike Records</h2>
@@ -99,5 +106,25 @@ include "includes/top.inc.php";
           </div>
 		  </div>
 		  </div>
+<?php } else { ?>
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div style="text-align: center;" class="panel-heading">USERS</div>
+
+  <!-- List group -->
+<div class="list-group">
+<?php
+   $sql ="SELECT * from USERS;";
+
+   $ret = $db->query($sql);
+   while($row = $ret->fetchArray(SQLITE3_ASSOC) ){
+      echo '<a href="/user.php?userid=' . $row['userid'] . '"class="list-group-item">' . $row['fullname'] . '</a>';
+   }
+   $db->close();
+?>
+</div>
+</div>
+
+<?php } ?>
 		  
 <?php include "includes/bottom.inc.php"; ?>
