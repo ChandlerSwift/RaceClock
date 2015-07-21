@@ -1,6 +1,7 @@
 <?php
 $page = "Dirt Bike Records";
 include "includes/top.inc.php";
+include_once "includes/db.inc.php";
 ?>
           <h2 class="sub-header">Dirt Bike Records</h2>
           <div class="table-responsive">
@@ -14,42 +15,24 @@ include "includes/top.inc.php";
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th>1</th>
-                  <td>1:15.025</td>
-                  <td>Phil Lowe</td>
-                  <td>7/13/15</td>
-                </tr>
-                <tr>
-                  <th>2</th>
-                  <td>1:16.309</td>
-                  <td>Andrew Swift</td>
-                  <td>7/15/15</td>
-                </tr>
-                <tr>
-                  <th>3</th>
-                  <td>1:16.998</td>
-                  <td>Aidan Lowe</td>
-                  <td>7/12/15</td>
-                </tr>
-				<tr>
-                  <th>4</th>
-                  <td>1:16.998</td>
-                  <td>Aidan Lowe</td>
-                  <td>7/12/15</td>
-                </tr>
-				<tr>
-                  <td>3</td>
-                  <td>1:16.998</td>
-                  <td>Aidan Lowe</td>
-                  <td>7/12/15</td>
-                </tr>
-				<tr>
-                  <td>3</td>
-                  <td>1:16.998</td>
-                  <td>Aidan Lowe</td>
-                  <td>7/12/15</td>
-                </tr>
+<?php
+   $ret = $db->query("SELECT * FROM times WHERE vehicle=1 ORDER BY time_ms ASC LIMIT 10;");
+   $x = 1;
+   while ($row = $ret->fetchArray(SQLITE3_ASSOC) ) {
+	  $userlookup = $db->query("SELECT fullname FROM users WHERE userid='" . $row['userid'] . "'")->fetchArray(SQLITE3_ASSOC);
+      echo '
+	  <tr>	
+		<th>' . $x . '</th>
+		<td>' . $row['time_str'] . "</td>
+		<td>" . $userlookup['fullname'] . "</td>
+		<td>" . date("M j\, Y", strtotime($row['timestamp'])) . "</td>
+	  </tr>";
+	  $x++;
+   }
+   if ($x == 1)
+	   echo "<tr><td colspan='4' style='text-align: center;'>Sorry, no results found!</td></tr>";
+   $db->close();
+?>
               </tbody>
             </table>
           </div>

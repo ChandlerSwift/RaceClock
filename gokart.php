@@ -29,6 +29,8 @@ include_once "includes/db.inc.php";
 	  </tr>";
 	  $x++;
    }
+   if ($x == 1)
+	   echo "<tr><td colspan='4' style='text-align: center;'>Sorry, no results found!</td></tr>";
    $db->close();
 ?>
               </tbody>
