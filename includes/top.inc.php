@@ -42,7 +42,7 @@
 				<li class="disabled"><a onclick="alert('Nice try.')" href="#">Shell Access</a></li>
 			  </ul>
 			</li>
-            <li><a href="/race.php">Race!</a></li>
+            <li><a href="/race/">Race!</a></li>
 			<li class="hidden-sm hidden-md hidden-lg"><a href="/user.php">Users</a></li>
           </ul>
         </div>
