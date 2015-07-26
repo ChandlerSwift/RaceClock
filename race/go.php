@@ -1,8 +1,12 @@
 <?php
 include_once "../includes/db.inc.php";
 
-if (!file_exists('lockfile.tmp'))
-	exec('php server.php 2>&1 > /dev/null');
+if (!file_exists('lockfile.tmp')) {
+	exec('php server.php > /dev/null 2>&1 &');
+} else {
+	exit("Race already in progress!");
+}
+
 
 if (isset($_POST['vehicle'])) {
 	$vehicle = "Dirt Bike";
@@ -28,7 +32,7 @@ if (isset($_POST['vehicle'])) {
 	<script>
 	$(function() {
 		show();
-		start();
+		setTimeout(start, 5500);
 	});
 	
 	var updateInterval = setInterval(ajaxUpdate, 500);
