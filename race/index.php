@@ -43,24 +43,11 @@ include_once "../includes/db.inc.php";
 			?>
         </select>
         <br>
-        
-        <div id="laps-select" class="center">
-          <label class="radio-inline">
-            <input type="radio" name="laps" value="1"> 1 lap
-          </label>
-          <label class="radio-inline">
-            <input type="radio" name="laps" value="3" checked> 3 laps
-          </label>
-          <label class="radio-inline">
-            <input type="radio" name="laps" value="5"> 5 laps
-          </label>
-        </div>
-        <br>
-        
+
         <div id="vehicle-select" class="center">
           <input name="vehicle" type="checkbox" checked data-toggle="toggle" data-on="Dirt Bike" data-off="Go-kart" data-onstyle="info" data-offstyle="success">
         </div>
-        <br><br><br>
+        <br><br>
         
         <button class="btn btn-lg btn-primary btn-block" type="submit">Race!</button>
       </form>

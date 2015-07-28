@@ -43,13 +43,10 @@ if (isset($_POST['vehicle'])) {
 	var updateInterval = setInterval(ajaxUpdate, 500);
 	
 	function ajaxUpdate() {
-		$.get("ajaxupdate.php", function(jsonResponse) {
-		var response = JSON.parse(jsonResponse);
-		$.each(response['laps'], function(index, value) {
-			$("#lap-status-" + index).text(value);
-		}); 
+		$.get("status.json", function(response) {
+		$('#status-content').text(response['status-display']);
 		if (response['status'] == "done")
-			cleanup(response['laps']);
+			cleanup(response);
 	});
 	}
 	
@@ -57,9 +54,8 @@ if (isset($_POST['vehicle'])) {
 		clearInterval(updateInterval);
 		console.log['cleaning up'];
 		$('#bottomButton').text('Next Race').toggleClass('btn-danger', false).toggleClass('btn-success', true);
-		$('#status-content').text('Race Complete!');
 		stop();
-		$('#total-time-status').text(responseObject[Object.keys(responseObject).length]);
+		$('#total-time-status').text(responseObject[status]);
 	}
 	</script>
   </head>
@@ -74,11 +70,11 @@ if (isset($_POST['vehicle'])) {
 	  </div>
 	  <div class="container">
 		<h2 id="status-title" class="form-signin-heading">Race Status</h2>
-		<div class="well" id="race-time-status"><h3 style="margin: 0px;" id="total-time-status"></h3><!--<br><h5 id="race-lap-time-status">Lap: 00:00.000</h5>--></div>
+		<div class="well" id="race-time-status"><h3 style="margin: 0px;" id="total-time-status"></h3></div>
 			<table class="table" id="status-table">
 				<tr>
 					<th>Status:</th>
-					<td id="status-content">Racing</td>
+					<td id="status-content">Queued</td>
 				</tr>
 				<tr>
 					<th>Racer:</th>
@@ -91,36 +87,12 @@ if (isset($_POST['vehicle'])) {
 				</tr>
 				<tr>
 					<th>Vehicle:</th>
-					<td id="status-content"><?= $vehicle ?></td>
+					<td><?= $vehicle ?></td>
 				</tr>
 				<tr>
-					<th>Lap:</th>
-					<td>1 of <?= $_POST['laps'] ?></td>
-				</tr><?php if ($_POST['laps'] != 1): ?>
-				<tr>
-					<td colspan="2">
-						<table id="lap-times-table" class="table table-bordered table-striped">
-						<thead>
-							<tr>
-								<th style="text-align: center;">Lap</th>
-								<th style="text-align: center;">Time</th>
-							</tr>
-						</thead>
-						<tbody>
-						<?php 
-for ($x = 1; $x <= $_POST['laps']; $x++) {
-echo <<<EndOfSomething
-							<tr>
-								<td>$x</td>
-								<td id="lap-status-$x">Pending</td>
-							</tr>
-EndOfSomething;
-}
-?>
-						</tbody>
-						</table>
-					</td>
-				</tr><?php endif; ?>
+					<th>Track:</th>
+					<td>Dirt<?php // echo $vehicle; ?></td>
+				</tr>
 			</table>
 			<a href="cancel.php" id="bottomButton" class="btn btn-lg btn-danger btn-block">Cancel Race</a>
 		</div>
