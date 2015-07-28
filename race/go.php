@@ -1,4 +1,9 @@
 <?php
+if (!isset($_POST['userid']) or !isset($_POST['vehicle'])) {
+	header("Location: ./");
+	exit;
+}
+
 include_once "../includes/db.inc.php";
 
 if (!file_exists('lockfile.tmp')) {
