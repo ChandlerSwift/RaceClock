@@ -1,15 +1,21 @@
 <?php
-if (!isset($_POST['userid']) or !isset($_POST['vehicle'])) {
+if (!isset($_POST['userid'])) {
 	header("Location: ./");
 	exit;
 }
+unlink('status.json');
 
 include_once "../includes/db.inc.php";
 
 if (!file_exists('lockfile.tmp')) {
-	exec('php server.php > /dev/null 2>&1 &');
+	if (isset($_POST['vehicle'])) {
+		$vehicle_db = 1;
+	} else {
+		$vehicle_db = 2;
+	}
+	exec('sudo ./go.py ' . $_POST['userid'] . ' ' . $vehicle_db . ' 1 > /dev/null 2>&1 &'); // 1 is track number - to be updated!
 } else {
-	exit("Race already in progress!");
+	exit("Race already in progress! <a href='cancel.php'>Cancel Race?</a>");
 }
 
 
@@ -53,9 +59,9 @@ if (isset($_POST['vehicle'])) {
 	function cleanup(responseObject) {
 		clearInterval(updateInterval);
 		console.log['cleaning up'];
-		$('#bottomButton').text('Next Race').toggleClass('btn-danger', false).toggleClass('btn-success', true);
+		$('#bottomButton').text('Next Race').toggleClass('btn-danger', false).toggleClass('btn-success', true).href('./');
 		stop();
-		$('#total-time-status').text(responseObject[status]);
+		$('#total-time-status').text(responseObject['time']);
 	}
 	</script>
   </head>
