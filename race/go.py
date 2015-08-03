@@ -25,7 +25,7 @@ if path.exists("stop.tmp"):
 	remove("stop.tmp")
 
 # Sets initial JSON
-data = {'status': 'normal', 'status-display': 'Queueing...', 'time': 'asdf'}; 
+data = {'status': 'normal', 'status-display': 'Queued', 'time': 'none-yet'}; 
 with open('status.json', 'w') as outfile:
     json.dump(data, outfile)
 
@@ -55,7 +55,7 @@ wiringpi2.digitalWrite(1,0)
 sleep(.5)
 wiringpi2.digitalWrite(2,1)
 startTime = datetime.datetime.now()
-data['status-display'] = 'Race In Progress...'
+data['status-display'] = 'In Progress'
 with open('status.json', 'w') as outfile:
 	json.dump(data, outfile)
 sleep(2)
@@ -64,8 +64,8 @@ sleep(5)
 
 ######### Wait for Laser to detect finish #########
 
-while (not wiringpi2.digitalRead(3)) and (not path.exists("stop.tmp")):
-	sleep(.01)
+while (wiringpi2.digitalRead(3)) and (not path.exists("stop.tmp")):
+	sleep(.001) # Utilizes 20-30% of CPU with millisecond polling
 
 if path.exists("stop.tmp"):
 	remove("stop.tmp")
@@ -77,12 +77,12 @@ else: # Terminated by lap completion, write to database.
 	script, userid, vehicle, track = argv
 	conn = sqlite3.connect('../racing.db')
 	c = conn.cursor()
-	c.execute("INSERT INTO times (userid, vehicle, time_ms, time_str) VALUES (?,?,?,?)", (userid, vehicle, time_ms, time_str))
+	c.execute("INSERT INTO times (userid, vehicle, time_ms, time_str, track) VALUES (?,?,?,?,?)", (userid, vehicle, time_ms, time_str, track))
 	conn.commit()
 	conn.close()
 
 	data['status'] = 'done'
-	data['status-display'] = 'Race Complete'
+	data['status-display'] = 'Complete'
 	data['time'] = str(timeTaken)[:11]
 	with open('status.json', 'w') as outfile:
 		json.dump(data, outfile)

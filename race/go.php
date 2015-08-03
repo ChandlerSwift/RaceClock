@@ -13,7 +13,7 @@ if (!file_exists('lockfile.tmp')) {
 	} else {
 		$vehicle_db = 2;
 	}
-	exec('sudo ./go.py ' . $_POST['userid'] . ' ' . $vehicle_db . ' 1 > /dev/null 2>&1 &'); // 1 is track number - to be updated!
+	exec('sudo ./go.py ' . $_POST['userid'] . ' ' . $vehicle_db . ' 1 > logfile.log 2>&1 &'); // 1 is track number - to be updated!
 } else {
 	exit("Race already in progress! <a href='cancel.php'>Cancel Race?</a>");
 }
@@ -23,6 +23,12 @@ if (isset($_POST['vehicle'])) {
 	$vehicle = "Dirt Bike";
 } else {
 	$vehicle = "Go-kart";
+}
+
+if (isset($_POST['track'])) {
+	$track = "Grass";
+} else {
+	$track = "Dirt";
 }
 ?>
 <!DOCTYPE html>
@@ -59,7 +65,7 @@ if (isset($_POST['vehicle'])) {
 	function cleanup(responseObject) {
 		clearInterval(updateInterval);
 		console.log['cleaning up'];
-		$('#bottomButton').text('Next Race').toggleClass('btn-danger', false).toggleClass('btn-success', true).href('./');
+		$('#bottomButton').text('Next Race').toggleClass('btn-danger', false).toggleClass('btn-success', true).attr('href', './');
 		stop();
 		$('#total-time-status').text(responseObject['time']);
 	}
@@ -97,7 +103,7 @@ if (isset($_POST['vehicle'])) {
 				</tr>
 				<tr>
 					<th>Track:</th>
-					<td>Dirt<?php // echo $vehicle; ?></td>
+					<td><?= $track ?></td>
 				</tr>
 			</table>
 			<a href="cancel.php" id="bottomButton" class="btn btn-lg btn-danger btn-block">Cancel Race</a>
