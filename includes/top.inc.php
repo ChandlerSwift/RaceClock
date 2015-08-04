@@ -31,18 +31,6 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li class="active"><a href="/">Stats</a></li>
-			<li class="dropdown">
-			  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
-			  <ul class="dropdown-menu">
-				<li><a href="/admin/add-user.php">Add User</a></li>
-				<li><a href="/admin/manual-race.php">Manual Race</a></li>
-				<li><a href="/admin/correct-time.php">Correct Time</a></li>
-				<li><a href="/admin/delete-race.php">Delete Race</a></li>
-				<li role="separator" class="divider"></li>
-				<li class="disabled"><a onclick="alert('Nice try.')" href="#">Shell Access</a></li>
-			  </ul>
-			</li>
-            <li><a href="/race/">Race!</a></li>
 			<li class="hidden-sm hidden-md hidden-lg"><a href="/user.php">Users</a></li>
           </ul>
         </div>
