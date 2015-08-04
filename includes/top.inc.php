@@ -30,7 +30,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a href="/">Stats</a></li>
+            <li class="hidden-sm hidden-md hidden-lg active"><a href="/">Stats</a></li>
 			<li class="hidden-sm hidden-md hidden-lg"><a href="/user.php">Users</a></li>
           </ul>
         </div>
