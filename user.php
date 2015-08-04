@@ -5,9 +5,8 @@ include_once "includes/db.inc.php";
 ?>
 <?php if (isset($_GET["userid"])) { ?>
 		<h1 class="page-header"><?php
-   $ret = $db->query("SELECT fullname FROM users WHERE userid=" . $_GET['userid'] . ";");
-   $row = $ret->fetchArray(SQLITE3_ASSOC);
-   echo $row['fullname'];
+	$userlookup = $db->query("SELECT * FROM users WHERE userid='" . $_GET['userid'] . "' LIMIT 1;")->fetchArray(SQLITE3_ASSOC);
+	echo $userlookup['fullname'];
 ?></h1>
 		  <div class="row">
 		  <div class="col-md-6">
@@ -26,7 +25,6 @@ include_once "includes/db.inc.php";
 	   $ret = $db->query("SELECT * FROM times WHERE vehicle=1 AND userid=" . $_GET['userid'] . " ORDER BY time_ms ASC LIMIT 3;");
 	   $x = 1;
 	   while ($row = $ret->fetchArray(SQLITE3_ASSOC) ) {
-		  $userlookup = $db->query("SELECT fullname FROM users WHERE userid='" . $row['userid'] . "';")->fetchArray(SQLITE3_ASSOC);
 		  echo '
 		  <tr>
 			<th>' . $x . '</th>
@@ -58,7 +56,6 @@ include_once "includes/db.inc.php";
    $ret = $db->query("SELECT * FROM times WHERE vehicle=2 AND userid=" . $_GET['userid'] . " ORDER BY time_ms ASC LIMIT 3;");
    $x = 1;
    while ($row = $ret->fetchArray(SQLITE3_ASSOC) ) {
-	  $userlookup = $db->query("SELECT fullname FROM users WHERE userid='" . $row['userid'] . "';")->fetchArray(SQLITE3_ASSOC);
       echo '
 	  <tr>
 		<th>' . $x . '</th>
@@ -83,11 +80,25 @@ include_once "includes/db.inc.php";
 				  <tbody>
 					<tr>
 					  <th>Average Time</th>
-					  <td>1:25.025</td>
+					  <td><?php
+   $ret = $db->query("SELECT avg(time_ms) AS 'average_time' FROM times WHERE vehicle=1 AND userid=" . $_GET['userid'] . ";");
+   if ($row = $ret->fetchArray(SQLITE3_ASSOC) and isset($row['average_time']) ) {
+      echo formatMilliseconds($row['average_time']);
+   } else {
+	   echo "None yet!";
+   }
+?></td>
 					</tr>
 					<tr>
 					  <th>Slowest Time</th>
-					  <td>1:16.309</td>
+					  <td><?php
+   $ret = $db->query("SELECT * FROM times WHERE vehicle=1 AND userid=" . $_GET['userid'] . " ORDER BY time_ms DESC LIMIT 1;");
+   if ($row = $ret->fetchArray(SQLITE3_ASSOC) ) {
+      echo $row['time_str'];
+   } else {
+	   echo "None yet!";
+   }
+?></td>
 					</tr>
 				  </tbody>
 				</table>
@@ -100,11 +111,25 @@ include_once "includes/db.inc.php";
 				  <tbody>
 					<tr>
 					  <th>Average Time</th>
-					  <td>1:25.025</td>
+					  <td><?php
+   $ret = $db->query("SELECT avg(time_ms) AS 'average_time' FROM times WHERE vehicle=2 AND userid=" . $_GET['userid'] . ";");
+   if ($row = $ret->fetchArray(SQLITE3_ASSOC) && isset($row['average_time'])) {
+      echo formatMilliseconds($row['average_time']);
+   } else {
+	   echo "None yet!";
+   }
+?></td>
 					</tr>
 					<tr>
 					  <th>Slowest Time</th>
-					  <td>1:16.309</td>
+					  <td><?php
+   $ret = $db->query("SELECT * FROM times WHERE vehicle=2 AND userid=" . $_GET['userid'] . " ORDER BY time_ms DESC LIMIT 1;");
+   if ($row = $ret->fetchArray(SQLITE3_ASSOC) ) {
+      echo $row['time_str'];
+   } else {
+	   echo "None yet!";
+   }
+?></td>
 					</tr>
 				  </tbody>
 				</table>
