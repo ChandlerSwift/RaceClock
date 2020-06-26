@@ -4,6 +4,7 @@ WORKDIR /var/www/html
 
 COPY . .
 
+ARG source_db=racing.db.empty
+
 # initialize empty db
-#COPY racing.db.empty racing.db
-COPY racing.db.sample racing.db
+COPY $source_db racing.db
